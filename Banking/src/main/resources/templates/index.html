@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System</title>
+    <style>
+        /* ...existing code... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Banking System</h1>
+        <!-- Success/Error Messages -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        <!-- Create Account Button -->
+        <a href="/create" class="btn-create" style="display: inline-block; text-decoration: none; text-align: center; padding: 12px 20px; border-radius: 4px; color: white;">+ Create New Account</a>
+        <!-- Accounts Display -->
+        <div class="accounts-section">
+            <h2>All Accounts</h2>
+            <div th:each="account : ${accounts}" class="account-card">
+                <strong th:text="${account.accNo}">Account Number</strong> - 
+                <span th:text="${account.name}">Account Holder</span>
+                <div style="float: right; font-weight: bold; color: #27ae60;">
+                    Balance: $<span th:text="${#numbers.formatDecimal(account.balance, 1, 2)}">0.00</span>
+                </div>
+            </div>
+        </div>
+        <!-- Banking Operations -->
+        <div class="operations">
+            <!-- Deposit -->
+            <div class="operation-card">
+                <h3>💰 Deposit Money</h3>
+                <form method="post" action="/deposit">
+                    <select name="accNo" required>
+                        <option value="">Select Account</option>
+                        <option th:each="account : ${accounts}" 
+                                th:value="${account.accNo}" 
+                                th:text="${account.accNo + ' - ' + account.name}">
+                        </option>
+                    </select>
+                    <input type="number" name="amount" placeholder="Amount" step="0.01" min="0.01" required>
+                    <button type="submit">Deposit</button>
+                </form>
+            </div>
+            <!-- Withdraw -->
+            <div class="operation-card">
+                <h3>💸 Withdraw Money</h3>
+                <form method="post" action="/withdraw">
+                    <select name="accNo" required>
+                        <option value="">Select Account</option>
+                        <option th:each="account : ${accounts}" 
+                                th:value="${account.accNo}" 
+                                th:text="${account.accNo + ' - ' + account.name}">
+                        </option>
+                    </select>
+                    <input type="number" name="amount" placeholder="Amount" step="0.01" min="0.01" required>
+                    <button type="submit">Withdraw</button>
+                </form>
+            </div>
+            <!-- Transfer -->
+            <div class="operation-card">
+                <h3>🔄 Transfer Money</h3>
+                <form method="post" action="/transfer">
+                    <select name="fromAccNo" required>
+                        <option value="">From Account</option>
+                        <option th:each="account : ${accounts}" 
+                                th:value="${account.accNo}" 
+                                th:text="${account.accNo + ' - ' + account.name}">
+                        </option>
+                    </select>
+                    <select name="toAccNo" required>
+                        <option value="">To Account</option>
+                        <option th:each="account : ${accounts}" 
+                                th:value="${account.accNo}" 
+                                th:text="${account.accNo + ' - ' + account.name}">
+                        </option>
+                    </select>
+                    <input type="number" name="amount" placeholder="Amount" step="0.01" min="0.01" required>
+                    <button type="submit">Transfer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

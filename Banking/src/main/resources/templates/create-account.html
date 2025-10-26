@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Banking System</title>
+    <style>
+        /* ...existing code... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Account</h1>
+        <form method="post" action="/create">
+            <input type="text" name="accNo" placeholder="Account Number (e.g., 104)" required>
+            <input type="text" name="name" placeholder="Account Holder Name" required>
+            <input type="number" name="balance" placeholder="Initial Balance" step="0.01" min="0" required>
+            <button type="submit">Create Account</button>
+        </form>
+        <div class="back-link">
+            <a href="/">← Back to Banking System</a>
+        </div>
+    </div>
+</body>
+</html>
